@@ -4,10 +4,9 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Title Page</title>
-
-		<!-- Bootstrap CSS -->
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+		<title>Meetup Message Application</title>
+		<include template='./vendprstyles.marko' />
+		<link rel='stylesheet', href='/app.css' />
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,11 +16,19 @@
 		<![endif]-->
 	</head>
 	<body>
-		<h1 class="text-center">Hello World</h1>
+		<md-toolbar md-scroll-shrink class='md-normal'>
+		<div class='md-toolbar-tools'>
+		<span class='md-flex'>Meetup Relstime Questions & Feedback</span>
+		</div>
+		</md-toolbar>
 
+		<div ui-view></div>
+
+		<include template='./vendorscripts.marko' />
+		<incldue template='./ngtemplates.marko' />
+		<script src='/bindtable.js'></script>
+		<script src='/app.js'></script>
 		<!-- jQuery -->
 		<script src="//code.jquery.com/jquery.js"></script>
-		<!-- Bootstrap JavaScript -->
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	</body>
 </html>

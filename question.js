@@ -48,7 +48,55 @@ function setup (io) {
 			.run(cb);
 
 	});
-}
+
+	socket.on('question:changes:start', function(data){
+
+		let limit, filter;
+		limit = data.limit || 100;
+		filter = data.filter || {};
+		r.table('question')
+		.orderby({index: r.desc('createdAt')})
+		.filter(filter)
+		.limit(limit)
+		.changes()
+		.run({cursor: true}, handleChange);
+
+		function handleChange(err, cursor){
+
+			if(err){
+
+				console.log(err);
+			}
+			else{
+
+				if(cursor){
+					cursor.each(function(err, record){
+						if(err){
+							console.log(err);
+						}
+						else{
+							socket.emit('quesion:changes', record);
+						}
+					});
+				}
+			}
+			socket.on('question:changes:stop', stopCursor);
+
+			socket.on('disconnect', stopCursor);
+
+			function stopCursor () {
+			  if(cursor){
+				cursor.close();
+			  }
+			  socket.removeListener('question:changes:stop', stopCursor);
+			  socket.removeListener('disconnect', stopCursor);
+			}
+		}
+		
+	});
+
+});
+
 
 module.exports = {
 	setup: setup
